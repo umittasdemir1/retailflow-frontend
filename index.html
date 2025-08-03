@@ -267,6 +267,79 @@
             transition: width 0.3s ease;
         }
 
+        /* Strategy Selection */
+        .strategy-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--secondary-color);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .strategy-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .strategy-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .strategy-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .strategy-option:hover {
+            border-color: var(--border-color);
+            box-shadow: var(--shadow);
+        }
+
+        .strategy-option.selected {
+            border-color: var(--primary-color);
+            background: #eff6ff;
+        }
+
+        .strategy-radio {
+            margin-top: 2px;
+        }
+
+        .strategy-content {
+            flex: 1;
+        }
+
+        .strategy-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .strategy-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .strategy-params {
+            font-size: 0.8rem;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
         /* Analysis Results */
         .results-section {
             display: none;
@@ -577,6 +650,40 @@
                             <div class="stat-value" id="fileName"></div>
                         </div>
                     </div>
+
+                    <!-- Transfer Strategy Selection -->
+                    <div class="strategy-section" id="strategySection" style="display: none;">
+                        <div class="strategy-title">
+                            <i class="fas fa-cogs"></i>
+                            Transfer Stratejisi
+                        </div>
+                        <div class="strategy-options">
+                            <div class="strategy-option selected" onclick="selectStrategy('sakin')">
+                                <input type="radio" name="strategy" value="sakin" checked class="strategy-radio">
+                                <div class="strategy-content">
+                                    <div class="strategy-name">Sakin Strateji</div>
+                                    <div class="strategy-desc">Güvenli ve kontrollü transfer yaklaşımı</div>
+                                    <div class="strategy-params">STR ≥ %15 • Min 3 envanter • Max 5 transfer</div>
+                                </div>
+                            </div>
+                            <div class="strategy-option" onclick="selectStrategy('kontrollu')">
+                                <input type="radio" name="strategy" value="kontrollu" class="strategy-radio">
+                                <div class="strategy-content">
+                                    <div class="strategy-name">Kontrollü Strateji</div>
+                                    <div class="strategy-desc">Dengeli risk ve performans</div>
+                                    <div class="strategy-params">STR ≥ %10 • Min 2 envanter • Max 10 transfer</div>
+                                </div>
+                            </div>
+                            <div class="strategy-option" onclick="selectStrategy('agresif')">
+                                <input type="radio" name="strategy" value="agresif" class="strategy-radio">
+                                <div class="strategy-content">
+                                    <div class="strategy-name">Agresif Strateji</div>
+                                    <div class="strategy-desc">Maksimum performans odaklı</div>
+                                    <div class="strategy-params">STR ≥ %8 • Envanter limiti yok • Sınırsız transfer</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Quick Actions -->
@@ -665,6 +772,7 @@
         // Global variables
         let uploadedData = null;
         let analysisResults = null;
+        let selectedStrategy = 'sakin';
         const API_BASE = 'https://retailflow-backend-6bt3.onrender.com';
 
         // DOM elements
@@ -674,9 +782,26 @@
         const progressFill = document.getElementById('progressFill');
         const progressText = document.getElementById('progressText');
         const fileInfo = document.getElementById('fileInfo');
+        const strategySection = document.getElementById('strategySection');
         const analyzeBtn = document.getElementById('analyzeBtn');
         const downloadBtn = document.getElementById('downloadBtn');
         const apiStatus = document.getElementById('apiStatus');
+
+        // Strategy selection function
+        function selectStrategy(strategy) {
+            selectedStrategy = strategy;
+            
+            // Update UI
+            document.querySelectorAll('.strategy-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+            
+            // Update radio button
+            document.querySelector(`input[value="${strategy}"]`).checked = true;
+            
+            console.log('Strateji seçildi:', strategy);
+        }
 
         // API Health Check
         async function checkAPIHealth() {
@@ -802,9 +927,10 @@
                     progressFill.style.width = '100%';
                     progressText.textContent = 'Yükleme tamamlandı!';
                     
-                    // Show file info
+                    // Show file info and strategy section
                     document.getElementById('fileName').textContent = file.name;
                     fileInfo.style.display = 'block';
+                    strategySection.style.display = 'block';
                     analyzeBtn.disabled = false;
                     
                     uploadedData = result;
@@ -834,7 +960,7 @@
             const loading = document.getElementById('analysisLoading');
             const resultsSection = document.getElementById('resultsSection');
             
-            console.log('Analiz başlatılıyor...');
+            console.log('Analiz başlatılıyor...', 'Seçilen strateji:', selectedStrategy);
             
             loading.style.display = 'block';
             analyzeBtn.disabled = true;
@@ -845,7 +971,10 @@
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json'
-                    }
+                    },
+                    body: JSON.stringify({
+                        strategy: selectedStrategy
+                    })
                 });
 
                 console.log('Analiz response status:', response.status);
@@ -861,7 +990,7 @@
                         displayResults(data.results);
                         resultsSection.style.display = 'block';
                         downloadBtn.disabled = false;
-                        showNotification('Analiz başarıyla tamamlandı!', 'success');
+                        showNotification(`${selectedStrategy.charAt(0).toUpperCase() + selectedStrategy.slice(1)} strateji ile analiz tamamlandı!`, 'success');
                     } else {
                         throw new Error('Analiz sonucu boş geldi');
                     }
@@ -896,12 +1025,14 @@
                 const metrikler = results.magaza_metrikleri || {};
                 const toplamTransfer = results.toplam_transfer_sayisi || transferler.length;
                 const toplamGereksiz = results.toplam_gereksiz_sayisi || 0;
+                const strategyName = results.strateji || selectedStrategy;
 
                 console.log(`${transferler.length} transfer önerisi görüntüleniyor`);
 
                 const stats = [
                     { label: 'Transfer Önerileri', value: toplamTransfer.toLocaleString(), icon: 'fas fa-truck' },
                     { label: 'Gösterilen Öneri', value: transferler.length.toLocaleString() + ' / ' + toplamTransfer.toLocaleString(), icon: 'fas fa-eye' },
+                    { label: 'Kullanılan Strateji', value: strategyName.charAt(0).toUpperCase() + strategyName.slice(1), icon: 'fas fa-cogs' },
                     { label: 'Toplam Transfer Miktarı', value: transferler.reduce((sum, t) => sum + (t.transfer_miktari || 0), 0).toLocaleString(), icon: 'fas fa-boxes' },
                     { label: 'Ortalama STR Farkı', value: transferler.length > 0 ? (transferler.reduce((sum, t) => sum + (t.str_farki || 0), 0) / transferler.length).toFixed(1) + '%' : '0%', icon: 'fas fa-percentage' },
                     { label: 'Mağaza Sayısı', value: Object.keys(metrikler).length, icon: 'fas fa-store' }
@@ -970,7 +1101,7 @@
                         <tr>
                             <td colspan="7" style="text-align: center; padding: 20px;">
                                 <strong>Transfer önerisi bulunamadı</strong><br>
-                                <small>Verilerinizi kontrol edin</small>
+                                <small>Verilerinizi kontrol edin veya farklı strateji deneyin</small>
                             </td>
                         </tr>
                     `;
@@ -1029,7 +1160,7 @@
                         const url = window.URL.createObjectURL(blob);
                         const a = document.createElement('a');
                         a.href = url;
-                        a.download = `transfer_analizi_${new Date().getTime()}.xlsx`;
+                        a.download = `transfer_analizi_${selectedStrategy}_${new Date().getTime()}.xlsx`;
                         document.body.appendChild(a);
                         a.click();
                         document.body.removeChild(a);
@@ -1141,11 +1272,17 @@
         }
 
         function viewSettings() {
-            alert('AYARLAR:\n\n• STR Minimum Fark: %15\n• Maksimum Transfer: %40\n• Minimum Kalan: 2 adet\n• Maksimum Transfer: 5 adet\n\nBu ayarlar yakında düzenlenebilir olacak.');
+            const strategySettings = {
+                'sakin': 'STR Minimum Fark: %15\nMinimum Envanter: 3 adet\nMaksimum Transfer: 5 adet',
+                'kontrollu': 'STR Minimum Fark: %10\nMinimum Envanter: 2 adet\nMaksimum Transfer: 10 adet',
+                'agresif': 'STR Minimum Fark: %8\nMinimum Envanter: Yok\nMaksimum Transfer: Sınırsız'
+            };
+            
+            alert(`AKTIF STRATEJI AYARLARI (${selectedStrategy.toUpperCase()}):\n\n${strategySettings[selectedStrategy]}\n\nBu ayarlar transfer stratejisi seçimi ile değiştirilebilir.`);
         }
 
         function showHelp() {
-            alert('RETAILFLOW KULLANIM KILAVUZU:\n\n1. DOSYA YÜKLEME:\n   • Excel (.xlsx, .xls) veya CSV dosyası seçin\n   • Gerekli sütunlar: Depo Adı, Ürün Kodu, Ürün Adı, Satis, Envanter\n   • Maksimum dosya boyutu: 50MB\n\n2. ANALİZ:\n   • "Analizi Başlat" butonuna tıklayın\n   • STR bazlı transfer önerileri hesaplanır\n   • Sonuçlar otomatik olarak görüntülenir\n\n3. SONUÇLAR:\n   • Transfer önerileri tabloda listelenir\n   • Excel formatında indirebilirsiniz\n   • Tüm sonuçlar dahil edilir\n\n4. ALGORİTMA:\n   • Sell-Through Rate (STR) = Satış / (Satış + Envanter)\n   • En düşük STR\'dan en yüksek STR\'a transfer\n   • Minimum %15 STR farkı gerekli\n   • Güvenlik filtreleri uygulanır');
+            alert('RETAILFLOW KULLANIM KILAVUZU:\n\n1. DOSYA YÜKLEME:\n   • Excel (.xlsx, .xls) veya CSV dosyası seçin\n   • Gerekli sütunlar: Depo Adı, Ürün Kodu, Ürün Adı, Satis, Envanter\n   • Maksimum dosya boyutu: 50MB\n\n2. STRATEJİ SEÇİMİ:\n   • Sakin: Güvenli, STR≥%15, max 5 transfer\n   • Kontrollü: Dengeli, STR≥%10, max 10 transfer\n   • Agresif: Maksimum, STR≥%8, sınırsız transfer\n\n3. ANALİZ:\n   • "Analizi Başlat" butonuna tıklayın\n   • Seçilen stratejiye göre transfer önerileri hesaplanır\n   • Sonuçlar otomatik olarak görüntülenir\n\n4. SONUÇLAR:\n   • Transfer önerileri tabloda listelenir\n   • Excel formatında indirebilirsiniz\n   • Tüm sonuçlar dahil edilir\n\n5. ALGORİTMA:\n   • Sell-Through Rate (STR) = Satış / (Satış + Envanter)\n   • En düşük STR\'dan en yüksek STR\'a transfer\n   • Strateji bazlı filtreler uygulanır');
         }
 
         // Initialize app
