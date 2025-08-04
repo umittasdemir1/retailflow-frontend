@@ -988,4 +988,959 @@
                     headers: {
                         'Accept': 'application/json'
                     },
+                    timeout: 10000        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: var(--secondary-color);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-secondary:disabled {
+            background: #f1f5f9;
+            color: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--gradient);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Main Dashboard */
+        .dashboard {
+            padding: 3rem 0;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* File Upload */
+        .upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary-color);
+            background: var(--secondary-color);
+        }
+
+        .upload-area.dragover {
+            border-color: var(--primary-color);
+            background: var(--secondary-color);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .upload-text h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .upload-text p {
+            color: var(--text-secondary);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--secondary-color);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Strategy Selection */
+        .strategy-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--secondary-color);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .strategy-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .strategy-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .strategy-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .strategy-option:hover {
+            border-color: var(--border-color);
+            box-shadow: var(--shadow);
+        }
+
+        .strategy-option.selected {
+            border-color: var(--primary-color);
+            background: #eff6ff;
+        }
+
+        .strategy-radio {
+            margin-top: 2px;
+        }
+
+        .strategy-content {
+            flex: 1;
+        }
+
+        .strategy-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .strategy-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .strategy-params {
+            font-size: 0.8rem;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        /* Analysis Results */
+        .results-section {
+            display: none;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .results-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+            box-shadow: var(--shadow);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+
+        /* Transfer Table */
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th {
+            background: var(--secondary-color);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        .table tbody tr:hover {
+            background: var(--secondary-color);
+        }
+
+        .priority-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .priority-high {
+            background: #fef2f2;
+            color: var(--danger-color);
+        }
+
+        .priority-medium {
+            background: #fefce8;
+            color: var(--warning-color);
+        }
+
+        .priority-low {
+            background: #f0fdf4;
+            color: var(--accent-color);
+        }
+
+        /* Loading States */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--secondary-color);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* API Status */
+        .api-status {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .api-status.online {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .api-status.offline {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+        /* Store List */
+        .store-list {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.5rem;
+            background: white;
+        }
+
+        .store-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .store-item:hover {
+            background: var(--secondary-color);
+        }
+
+        .store-item.excluded {
+            background: #fef2f2;
+            border-left: 3px solid var(--danger-color);
+        }
+
+        .store-checkbox {
+            cursor: pointer;
+        }
+
+        .store-name {
+            flex: 1;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .store-info {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .exclusion-count {
+            font-weight: 600;
+            color: var(--danger-color);
+        }
+
+        .exclusion-content {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .results-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .table-container {
+                overflow-x: auto;
+            }
+
+            .nav-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            max-width: 300px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: var(--accent-color);
+        }
+
+        .notification.error {
+            background: var(--danger-color);
+        }
+
+        .notification.warning {
+            background: var(--warning-color);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-primary);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer p {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <!-- API Status Indicator -->
+    <div id="apiStatus" class="api-status offline">
+        <i class="fas fa-circle"></i>
+        API Bağlantısı Kontrol Ediliyor...
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <i class="fas fa-store"></i>
+                    <span>RetailFlow</span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Akıllı Mağaza Transfer Optimizasyonu</h1>
+            <p>STR bazlı algoritmalarla mağazalarınız arasında optimal ürün transferlerini belirleyin. Satış performansınızı artırın, envanter maliyetlerinizi düşürün.</p>
+            
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <div class="stat-number">%35</div>
+                    <div>Satış Artışı</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">%28</div>
+                    <div>Envanter Azalışı</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <div>Otomatik Analiz</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Dashboard -->
+    <main class="dashboard">
+        <div class="container">
+            <div class="dashboard-grid">
+                <!-- File Upload Section -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-upload"></i>
+                            Veri Yükleme
+                        </h2>
+                    </div>
+                    
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <div class="upload-text">
+                            <h3>Excel dosyanızı yükleyin</h3>
+                            <p>Sürükle-bırak yapın veya tıklayarak seçin</p>
+                            <small>Desteklenen: .xlsx, .xls, .csv (Max: 50MB)</small>
+                        </div>
+                        <input type="file" id="fileInput" class="file-input" accept=".xlsx,.xls,.csv">
+                    </div>
+
+                    <div class="progress-container" id="progressContainer">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <p id="progressText">Yükleniyor...</p>
+                    </div>
+
+                    <div id="fileInfo" style="display: none; margin-top: 1rem;">
+                        <div class="stat-item">
+                            <div class="stat-label">Yüklenen Dosya</div>
+                            <div class="stat-value" id="fileName"></div>
+                        </div>
+                    </div>
+
+                    <!-- Transfer Strategy Selection -->
+                    <div class="strategy-section" id="strategySection" style="display: none;">
+                        <div class="strategy-title">
+                            <i class="fas fa-cogs"></i>
+                            Transfer Stratejisi
+                        </div>
+                        <div class="strategy-options">
+                            <div class="strategy-option selected" onclick="selectStrategy('sakin')">
+                                <input type="radio" name="strategy" value="sakin" checked class="strategy-radio">
+                                <div class="strategy-content">
+                                    <div class="strategy-name">Sakin Strateji</div>
+                                    <div class="strategy-desc">Güvenli ve kontrollü transfer yaklaşımı</div>
+                                    <div class="strategy-params">STR ≥ %15 • Min 3 envanter • Max 5 transfer</div>
+                                </div>
+                            </div>
+                            <div class="strategy-option" onclick="selectStrategy('kontrollu')">
+                                <input type="radio" name="strategy" value="kontrollu" class="strategy-radio">
+                                <div class="strategy-content">
+                                    <div class="strategy-name">Kontrollü Strateji</div>
+                                    <div class="strategy-desc">Dengeli risk ve performans</div>
+                                    <div class="strategy-params">STR ≥ %10 • Min 2 envanter • Max 10 transfer</div>
+                                </div>
+                            </div>
+                            <div class="strategy-option" onclick="selectStrategy('agresif')">
+                                <input type="radio" name="strategy" value="agresif" class="strategy-radio">
+                                <div class="strategy-content">
+                                    <div class="strategy-name">Agresif Strateji</div>
+                                    <div class="strategy-desc">Maksimum performans odaklı</div>
+                                    <div class="strategy-params">STR ≥ %8 • Envanter limiti yok • Sınırsız transfer</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Store Exclusion Selection -->
+                    <div class="strategy-section" id="exclusionSection" style="display: none;">
+                        <div class="strategy-title">
+                            <i class="fas fa-ban"></i>
+                            İstisna Mağazalar
+                        </div>
+                        <div class="exclusion-content">
+                            <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;">
+                                Transferden hariç tutulacak mağazaları seçin. Bu mağazalar ne gönderen ne de alan mağaza olarak kullanılmayacak.
+                            </p>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <button class="btn btn-secondary" onclick="selectAllStores()" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
+                                    <i class="fas fa-check-square"></i>
+                                    Tümünü Seç
+                                </button>
+                                <button class="btn btn-secondary" onclick="clearAllStores()" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
+                                    <i class="fas fa-times"></i>
+                                    Temizle
+                                </button>
+                            </div>
+                            <div class="store-list" id="storeList">
+                                <!-- Store checkboxes will be populated here -->
+                            </div>
+                            <div class="exclusion-summary" id="exclusionSummary" style="margin-top: 1rem; display: none;">
+                                <div class="stat-label">
+                                    <i class="fas fa-info-circle"></i>
+                                    Seçili İstisna Mağazalar
+                                </div>
+                                <div class="exclusion-count" id="exclusionCount">0 mağaza seçili</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-bolt"></i>
+                            Hızlı İşlemler
+                        </h2>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                        <button class="btn btn-primary" onclick="startAnalysis()" id="analyzeBtn" disabled>
+                            <i class="fas fa-play"></i>
+                            Analizi Başlat
+                        </button>
+                        <button class="btn btn-secondary" onclick="downloadResults()" id="downloadBtn" disabled>
+                            <i class="fas fa-download"></i>
+                            Sonuçları İndir
+                        </button>
+                        <button class="btn btn-secondary" onclick="viewStores()">
+                            <i class="fas fa-store"></i>
+                            Mağazalar
+                        </button>
+                        <button class="btn btn-secondary" onclick="viewSettings()">
+                            <i class="fas fa-cog"></i>
+                            Ayarlar
+                        </button>
+                    </div>
+
+                    <div class="loading" id="analysisLoading">
+                        <div class="spinner"></div>
+                        <p>Global STR analizi yapılıyor...</p>
+                        <small>Bu işlem birkaç dakika sürebilir</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analysis Results -->
+            <div class="results-section" id="resultsSection">
+                <div class="results-header">
+                    <h2>
+                        <i class="fas fa-chart-line"></i>
+                        Analiz Sonuçları
+                    </h2>
+                    <button class="btn btn-primary" onclick="exportToExcel()">
+                        <i class="fas fa-file-excel"></i>
+                        Excel'e Aktar
+                    </button>
+                </div>
+
+                <div class="results-stats" id="resultsStats">
+                    <!-- Stats will be populated dynamically -->
+                </div>
+
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Ürün</th>
+                                <th>Gönderen</th>
+                                <th>Alan</th>
+                                <th>Miktar</th>
+                                <th>STR Farkı</th>
+                                <th>Öncelik</th>
+                                <th>Durum</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsTable">
+                            <!-- Results will be populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 RetailFlow - Mağaza Transfer Optimizasyon Sistemi. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Global variables
+        let uploadedData = null;
+        let analysisResults = null;
+        let selectedStrategy = 'sakin';
+        let excludedStores = [];
+        let availableStores = [];
+        const API_BASE = 'https://retailflow-backend-6bt3.onrender.com';
+
+        // DOM elements
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        const fileInfo = document.getElementById('fileInfo');
+        const strategySection = document.getElementById('strategySection');
+        const exclusionSection = document.getElementById('exclusionSection');
+        const storeList = document.getElementById('storeList');
+        const exclusionSummary = document.getElementById('exclusionSummary');
+        const exclusionCount = document.getElementById('exclusionCount');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const apiStatus = document.getElementById('apiStatus');
+
+        // Strategy selection function
+        function selectStrategy(strategy) {
+            selectedStrategy = strategy;
+            
+            // Update UI
+            document.querySelectorAll('.strategy-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+            
+            // Update radio button
+            document.querySelector(`input[value="${strategy}"]`).checked = true;
+            
+            console.log('Strateji seçildi:', strategy);
+        }
+
+        // Store exclusion functions
+        function populateStoreList(stores) {
+            availableStores = stores;
+            excludedStores = [];
+            
+            const storeListHTML = stores.map(store => `
+                <div class="store-item">
+                    <input type="checkbox" class="store-checkbox" id="store_${store.replace(/\s+/g, '_')}" onchange="toggleStoreExclusionByCheckbox('${store}')">
+                    <div class="store-name" onclick="toggleStoreExclusionByName('${store}')">${store}</div>
+                    <div class="store-info">Aktif</div>
+                </div>
+            `).join('');
+            
+            storeList.innerHTML = storeListHTML;
+            exclusionSection.style.display = 'block';
+            updateExclusionSummary();
+        }
+
+        function toggleStoreExclusionByCheckbox(storeName) {
+            const checkbox = document.getElementById(`store_${storeName.replace(/\s+/g, '_')}`);
+            const storeItem = checkbox.closest('.store-item');
+            const storeInfo = storeItem.querySelector('.store-info');
+            
+            if (checkbox.checked) {
+                // Add to exclusion
+                if (!excludedStores.includes(storeName)) {
+                    excludedStores.push(storeName);
+                }
+                storeItem.classList.add('excluded');
+                storeInfo.textContent = 'İstisna';
+            } else {
+                // Remove from exclusion
+                excludedStores = excludedStores.filter(name => name !== storeName);
+                storeItem.classList.remove('excluded');
+                storeInfo.textContent = 'Aktif';
+            }
+            
+            updateExclusionSummary();
+            console.log('İstisna mağazalar:', excludedStores);
+        }
+
+        function toggleStoreExclusionByName(storeName) {
+            const checkbox = document.getElementById(`store_${storeName.replace(/\s+/g, '_')}`);
+            
+            // Toggle checkbox programmatically
+            checkbox.checked = !checkbox.checked;
+            
+            // Call the checkbox handler
+            toggleStoreExclusionByCheckbox(storeName);
+        }
+
+        function selectAllStores() {
+            availableStores.forEach(storeName => {
+                const checkbox = document.getElementById(`store_${storeName.replace(/\s+/g, '_')}`);
+                const storeItem = checkbox.closest('.store-item');
+                const storeInfo = storeItem.querySelector('.store-info');
+                
+                checkbox.checked = true;
+                if (!excludedStores.includes(storeName)) {
+                    excludedStores.push(storeName);
+                }
+                storeItem.classList.add('excluded');
+                storeInfo.textContent = 'İstisna';
+            });
+            
+            updateExclusionSummary();
+            console.log('Tüm mağazalar seçildi:', excludedStores);
+        }
+
+        function clearAllStores() {
+            excludedStores = [];
+            
+            availableStores.forEach(storeName => {
+                const checkbox = document.getElementById(`store_${storeName.replace(/\s+/g, '_')}`);
+                const storeItem = checkbox.closest('.store-item');
+                const storeInfo = storeItem.querySelector('.store-info');
+                
+                checkbox.checked = false;
+                storeItem.classList.remove('excluded');
+                storeInfo.textContent = 'Aktif';
+            });
+            
+            updateExclusionSummary();
+            console.log('Tüm seçimler temizlendi');
+        }
+
+        function updateExclusionSummary() {
+            if (excludedStores.length > 0) {
+                exclusionSummary.style.display = 'block';
+                exclusionCount.textContent = `${excludedStores.length} mağaza seçili: ${excludedStores.join(', ')}`;
+            } else {
+                exclusionSummary.style.display = 'none';
+                exclusionCount.textContent = '0 mağaza seçili';
+            }
+        }
+
+        // API Health Check
+        async function checkAPIHealth() {
+            try {
+                console.log('API health check başlatılıyor...');
+                
+                const response = await fetch(`${API_BASE}/`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json'
+                    },
                     timeout: 10000
+
