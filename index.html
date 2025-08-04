@@ -483,7 +483,61 @@
             border: 1px solid #fecaca;
         }
 
-        /* Responsive */
+        /* Store List */
+        .store-list {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.5rem;
+            background: white;
+        }
+
+        .store-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .store-item:hover {
+            background: var(--secondary-color);
+        }
+
+        .store-item.excluded {
+            background: #fef2f2;
+            border-left: 3px solid var(--danger-color);
+        }
+
+        .store-checkbox {
+            cursor: pointer;
+        }
+
+        .store-name {
+            flex: 1;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .store-info {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .exclusion-count {
+            font-weight: 600;
+            color: var(--danger-color);
+        }
+
+        .exclusion-content {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
         @media (max-width: 768px) {
             .dashboard-grid {
                 grid-template-columns: 1fr;
@@ -684,6 +738,29 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Store Exclusion Selection -->
+                    <div class="strategy-section" id="exclusionSection" style="display: none;">
+                        <div class="strategy-title">
+                            <i class="fas fa-ban"></i>
+                            İstisna Mağazalar
+                        </div>
+                        <div class="exclusion-content">
+                            <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;">
+                                Transferden hariç tutulacak mağazaları seçin. Bu mağazalar ne gönderen ne de alan mağaza olarak kullanılmayacak.
+                            </p>
+                            <div class="store-list" id="storeList">
+                                <!-- Store checkboxes will be populated here -->
+                            </div>
+                            <div class="exclusion-summary" id="exclusionSummary" style="margin-top: 1rem; display: none;">
+                                <div class="stat-label">
+                                    <i class="fas fa-info-circle"></i>
+                                    Seçili İstisna Mağazalar
+                                </div>
+                                <div class="exclusion-count" id="exclusionCount">0 mağaza seçili</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Quick Actions -->
@@ -773,6 +850,8 @@
         let uploadedData = null;
         let analysisResults = null;
         let selectedStrategy = 'sakin';
+        let excludedStores = [];
+        let availableStores = [];
         const API_BASE = 'https://retailflow-backend-6bt3.onrender.com';
 
         // DOM elements
@@ -783,6 +862,10 @@
         const progressText = document.getElementById('progressText');
         const fileInfo = document.getElementById('fileInfo');
         const strategySection = document.getElementById('strategySection');
+        const exclusionSection = document.getElementById('exclusionSection');
+        const storeList = document.getElementById('storeList');
+        const exclusionSummary = document.getElementById('exclusionSummary');
+        const exclusionCount = document.getElementById('exclusionCount');
         const analyzeBtn = document.getElementById('analyzeBtn');
         const downloadBtn = document.getElementById('downloadBtn');
         const apiStatus = document.getElementById('apiStatus');
@@ -801,6 +884,57 @@
             document.querySelector(`input[value="${strategy}"]`).checked = true;
             
             console.log('Strateji seçildi:', strategy);
+        }
+
+        // Store exclusion functions
+        function populateStoreList(stores) {
+            availableStores = stores;
+            excludedStores = [];
+            
+            const storeListHTML = stores.map(store => `
+                <div class="store-item" onclick="toggleStoreExclusion('${store}')">
+                    <input type="checkbox" class="store-checkbox" id="store_${store.replace(/\s+/g, '_')}" onchange="toggleStoreExclusion('${store}')">
+                    <div class="store-name">${store}</div>
+                    <div class="store-info">Aktif</div>
+                </div>
+            `).join('');
+            
+            storeList.innerHTML = storeListHTML;
+            exclusionSection.style.display = 'block';
+            updateExclusionSummary();
+        }
+
+        function toggleStoreExclusion(storeName) {
+            const checkbox = document.getElementById(`store_${storeName.replace(/\s+/g, '_')}`);
+            const storeItem = checkbox.closest('.store-item');
+            const storeInfo = storeItem.querySelector('.store-info');
+            
+            if (excludedStores.includes(storeName)) {
+                // Remove from exclusion
+                excludedStores = excludedStores.filter(name => name !== storeName);
+                checkbox.checked = false;
+                storeItem.classList.remove('excluded');
+                storeInfo.textContent = 'Aktif';
+            } else {
+                // Add to exclusion
+                excludedStores.push(storeName);
+                checkbox.checked = true;
+                storeItem.classList.add('excluded');
+                storeInfo.textContent = 'İstisna';
+            }
+            
+            updateExclusionSummary();
+            console.log('İstisna mağazalar:', excludedStores);
+        }
+
+        function updateExclusionSummary() {
+            if (excludedStores.length > 0) {
+                exclusionSummary.style.display = 'block';
+                exclusionCount.textContent = `${excludedStores.length} mağaza seçili: ${excludedStores.join(', ')}`;
+            } else {
+                exclusionSummary.style.display = 'none';
+                exclusionCount.textContent = '0 mağaza seçili';
+            }
         }
 
         // API Health Check
@@ -931,6 +1065,12 @@
                     document.getElementById('fileName').textContent = file.name;
                     fileInfo.style.display = 'block';
                     strategySection.style.display = 'block';
+                    
+                    // Populate store list for exclusion
+                    if (result.data && result.data.magazalar) {
+                        populateStoreList(result.data.magazalar);
+                    }
+                    
                     analyzeBtn.disabled = false;
                     
                     uploadedData = result;
@@ -973,7 +1113,8 @@
                         'Accept': 'application/json'
                     },
                     body: JSON.stringify({
-                        strategy: selectedStrategy
+                        strategy: selectedStrategy,
+                        excluded_stores: excludedStores
                     })
                 });
 
@@ -990,7 +1131,12 @@
                         displayResults(data.results);
                         resultsSection.style.display = 'block';
                         downloadBtn.disabled = false;
-                        showNotification(`${selectedStrategy.charAt(0).toUpperCase() + selectedStrategy.slice(1)} strateji ile analiz tamamlandı!`, 'success');
+                        
+                        let successMessage = `${selectedStrategy.charAt(0).toUpperCase() + selectedStrategy.slice(1)} strateji ile analiz tamamlandı!`;
+                        if (excludedStores.length > 0) {
+                            successMessage += ` (${excludedStores.length} mağaza hariç tutuldu)`;
+                        }
+                        showNotification(successMessage, 'success');
                     } else {
                         throw new Error('Analiz sonucu boş geldi');
                     }
@@ -1033,9 +1179,9 @@
                     { label: 'Transfer Önerileri', value: toplamTransfer.toLocaleString(), icon: 'fas fa-truck' },
                     { label: 'Gösterilen Öneri', value: transferler.length.toLocaleString() + ' / ' + toplamTransfer.toLocaleString(), icon: 'fas fa-eye' },
                     { label: 'Kullanılan Strateji', value: strategyName.charAt(0).toUpperCase() + strategyName.slice(1), icon: 'fas fa-cogs' },
+                    { label: 'İstisna Mağazalar', value: excludedStores.length > 0 ? `${excludedStores.length} mağaza` : 'Yok', icon: 'fas fa-ban' },
                     { label: 'Toplam Transfer Miktarı', value: transferler.reduce((sum, t) => sum + (t.transfer_miktari || 0), 0).toLocaleString(), icon: 'fas fa-boxes' },
-                    { label: 'Ortalama STR Farkı', value: transferler.length > 0 ? (transferler.reduce((sum, t) => sum + (t.str_farki || 0), 0) / transferler.length).toFixed(1) + '%' : '0%', icon: 'fas fa-percentage' },
-                    { label: 'Mağaza Sayısı', value: Object.keys(metrikler).length, icon: 'fas fa-store' }
+                    { label: 'Ortalama STR Farkı', value: transferler.length > 0 ? (transferler.reduce((sum, t) => sum + (t.str_farki || 0), 0) / transferler.length).toFixed(1) + '%' : '0%', icon: 'fas fa-percentage' }
                 ];
 
                 statsContainer.innerHTML = stats.map(stat => `
@@ -1278,11 +1424,21 @@
                 'agresif': 'STR Minimum Fark: %8\nMinimum Envanter: Yok\nMaksimum Transfer: Sınırsız'
             };
             
-            alert(`AKTIF STRATEJI AYARLARI (${selectedStrategy.toUpperCase()}):\n\n${strategySettings[selectedStrategy]}\n\nBu ayarlar transfer stratejisi seçimi ile değiştirilebilir.`);
+            let settingsText = `AKTIF STRATEJI AYARLARI (${selectedStrategy.toUpperCase()}):\n\n${strategySettings[selectedStrategy]}`;
+            
+            if (excludedStores.length > 0) {
+                settingsText += `\n\nİSTİSNA MAĞAZALAR:\n${excludedStores.join('\n')}`;
+            } else {
+                settingsText += '\n\nİSTİSNA MAĞAZA: Yok';
+            }
+            
+            settingsText += '\n\nBu ayarlar strateji seçimi ve istisna listesi ile değiştirilebilir.';
+            
+            alert(settingsText);
         }
 
         function showHelp() {
-            alert('RETAILFLOW KULLANIM KILAVUZU:\n\n1. DOSYA YÜKLEME:\n   • Excel (.xlsx, .xls) veya CSV dosyası seçin\n   • Gerekli sütunlar: Depo Adı, Ürün Kodu, Ürün Adı, Satis, Envanter\n   • Maksimum dosya boyutu: 50MB\n\n2. STRATEJİ SEÇİMİ:\n   • Sakin: Güvenli, STR≥%15, max 5 transfer\n   • Kontrollü: Dengeli, STR≥%10, max 10 transfer\n   • Agresif: Maksimum, STR≥%8, sınırsız transfer\n\n3. ANALİZ:\n   • "Analizi Başlat" butonuna tıklayın\n   • Seçilen stratejiye göre transfer önerileri hesaplanır\n   • Sonuçlar otomatik olarak görüntülenir\n\n4. SONUÇLAR:\n   • Transfer önerileri tabloda listelenir\n   • Excel formatında indirebilirsiniz\n   • Tüm sonuçlar dahil edilir\n\n5. ALGORİTMA:\n   • Sell-Through Rate (STR) = Satış / (Satış + Envanter)\n   • En düşük STR\'dan en yüksek STR\'a transfer\n   • Strateji bazlı filtreler uygulanır');
+            alert('RETAILFLOW KULLANIM KILAVUZU:\n\n1. DOSYA YÜKLEME:\n   • Excel (.xlsx, .xls) veya CSV dosyası seçin\n   • Gerekli sütunlar: Depo Adı, Ürün Kodu, Ürün Adı, Satis, Envanter\n   • Maksimum dosya boyutu: 50MB\n\n2. STRATEJİ SEÇİMİ:\n   • Sakin: Güvenli, STR≥%15, max 5 transfer\n   • Kontrollü: Dengeli, STR≥%10, max 10 transfer\n   • Agresif: Maksimum, STR≥%8, sınırsız transfer\n\n3. İSTİSNA MAĞAZALAR:\n   • Transferden hariç tutulacak mağazaları seçin\n   • İstisna mağazalar ne gönderen ne alan olarak kullanılmaz\n   • İsteğe bağlı, hiçbirini seçmeyebilirsiniz\n\n4. ANALİZ:\n   • "Analizi Başlat" butonuna tıklayın\n   • Seçilen stratejiye göre transfer önerileri hesaplanır\n   • İstisna mağazalar analize dahil edilmez\n   • Sonuçlar otomatik olarak görüntülenir\n\n5. SONUÇLAR:\n   • Transfer önerileri tabloda listelenir\n   • Excel formatında indirebilirsiniz\n   • Tüm sonuçlar dahil edilir\n\n6. ALGORİTMA:\n   • Sell-Through Rate (STR) = Satış / (Satış + Envanter)\n   • En düşük STR\'dan en yüksek STR\'a transfer\n   • Strateji bazlı filtreler uygulanır\n   • İstisna mağazalar tamamen hariç tutulur');
         }
 
         // Initialize app
