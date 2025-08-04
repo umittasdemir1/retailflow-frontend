@@ -171,12 +171,22 @@
         }
 
         .dashboard-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            display: flex;
+            flex-direction: column;
             gap: 2rem;
             margin-bottom: 3rem;
         }
 
+        /* Desktop layout */
+        @media (min-width: 769px) {
+            .dashboard-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                align-items: start;
+            }
+        }
+
+        /* Card height optimization */
         .card {
             background: white;
             border-radius: 12px;
@@ -184,6 +194,8 @@
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
             transition: all 0.3s ease;
+            height: fit-content;
+            min-height: 400px;
         }
 
         .card:hover {
@@ -541,6 +553,12 @@
         @media (max-width: 768px) {
             .dashboard-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .card {
+                min-height: auto;
+                padding: 1.5rem;
             }
 
             .hero h1 {
@@ -562,6 +580,12 @@
             .nav-actions {
                 flex-direction: column;
                 gap: 0.5rem;
+            }
+
+            /* Mobile button optimization */
+            .btn {
+                min-height: 50px;
+                justify-content: center;
             }
         }
 
@@ -764,26 +788,18 @@
                     <div class="card-header">
                         <h2 class="card-title">
                             <i class="fas fa-bolt"></i>
-                            Hızlı İşlemler
+                            İşlemler
                         </h2>
                     </div>
                     
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
-                        <button class="btn btn-primary" onclick="startAnalysis()" id="analyzeBtn" disabled>
+                    <div style="display: flex; flex-direction: column; gap: 1rem; height: 100%;">
+                        <button class="btn btn-primary" onclick="startAnalysis()" id="analyzeBtn" disabled style="flex: 1; min-height: 80px; font-size: 1.1rem;">
                             <i class="fas fa-play"></i>
                             Analizi Başlat
                         </button>
-                        <button class="btn btn-secondary" onclick="downloadResults()" id="downloadBtn" disabled>
+                        <button class="btn btn-secondary" onclick="downloadResults()" id="downloadBtn" disabled style="flex: 1; min-height: 80px; font-size: 1.1rem;">
                             <i class="fas fa-download"></i>
                             Sonuçları İndir
-                        </button>
-                        <button class="btn btn-secondary" onclick="viewStores()">
-                            <i class="fas fa-store"></i>
-                            Mağazalar
-                        </button>
-                        <button class="btn btn-secondary" onclick="viewSettings()">
-                            <i class="fas fa-cog"></i>
-                            Ayarlar
                         </button>
                     </div>
 
@@ -1462,4 +1478,4 @@
         });
     </script>
 </body>
-                                                                                                                                                                           </html>
+                                        </html>
