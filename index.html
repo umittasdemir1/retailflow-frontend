@@ -124,6 +124,22 @@
             cursor: not-allowed;
         }
 
+        .btn-danger {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger:disabled {
+            background: #fca5a5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         /* Hero Section */
         .hero {
             background: var(--gradient);
@@ -710,8 +726,17 @@
 
                     <div id="fileInfo" style="display: none; margin-top: 1rem;">
                         <div class="stat-item">
-                            <div class="stat-label">Yüklenen Dosya</div>
-                            <div class="stat-value" id="fileName"></div>
+                            <div class="stat-label">
+                                <i class="fas fa-file-check"></i>
+                                Yüklenen Dosya
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div class="stat-value" id="fileName"></div>
+                                <button class="btn btn-danger" onclick="removeFile()" id="removeFileBtn" style="padding: 0.5rem 1rem; font-size: 0.85rem; margin-left: 1rem;">
+                                    <i class="fas fa-trash-alt"></i>
+                                    Kaldır
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -992,6 +1017,82 @@
                 exclusionSummary.style.display = 'none';
                 exclusionCount.textContent = '0 mağaza seçili';
             }
+        }
+
+        // File removal function
+        async function removeFile() {
+            if (!uploadedData) {
+                showNotification('Kaldırılacak dosya yok!', 'warning');
+                return;
+            }
+
+            try {
+                console.log('Dosya kaldırma işlemi başlatılıyor...');
+                
+                // Show confirmation dialog
+                const confirmed = confirm('Yüklenen dosyayı kaldırmak istediğinizden emin misiniz? Bu işlem geri alınamaz.');
+                if (!confirmed) {
+                    return;
+                }
+
+                // Call backend to remove file
+                const response = await fetch(`${API_BASE}/remove-file`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                });
+
+                console.log('Remove file response status:', response.status);
+
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('Dosya kaldırma başarılı:', result);
+                    
+                    // Reset frontend state
+                    resetFileUploadState();
+                    
+                    showNotification('Dosya başarıyla kaldırıldı!', 'success');
+                } else {
+                    const errorData = await response.json();
+                    console.error('Dosya kaldırma hatası:', errorData);
+                    throw new Error(errorData.error || 'File removal failed');
+                }
+            } catch (error) {
+                console.error('Remove file error:', error);
+                showNotification(`Dosya kaldırma başarısız: ${error.message}`, 'error');
+            }
+        }
+
+        function resetFileUploadState() {
+            // Reset global variables
+            uploadedData = null;
+            analysisResults = null;
+            excludedStores = [];
+            availableStores = [];
+            
+            // Reset UI elements
+            fileInfo.style.display = 'none';
+            strategySection.style.display = 'none';
+            exclusionSection.style.display = 'none';
+            document.getElementById('resultsSection').style.display = 'none';
+            progressContainer.style.display = 'none';
+            
+            // Reset file input
+            fileInput.value = '';
+            
+            // Reset buttons
+            analyzeBtn.disabled = true;
+            downloadBtn.disabled = true;
+            
+            // Clear file name
+            document.getElementById('fileName').textContent = '';
+            
+            // Reset upload area
+            uploadArea.classList.remove('dragover');
+            
+            console.log('File upload state reset completed');
         }
 
         // API Health Check
@@ -1478,4 +1579,4 @@
         });
     </script>
 </body>
-                                        </html>
+</html>
