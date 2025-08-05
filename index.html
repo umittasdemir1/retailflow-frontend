@@ -187,7 +187,7 @@
 
         /* Main Dashboard */
         .dashboard {
-            padding: 3rem 0;
+            padding: 3rem 0 2rem 0;
         }
 
         .dashboard-grid {
@@ -510,14 +510,21 @@
         /* API Status */
         .api-status {
             position: fixed;
-            top: 80px;
+            top: 20px;
             right: 20px;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
+            padding: 0.75rem 1.25rem;
+            border-radius: 25px;
             font-size: 0.875rem;
             font-weight: 500;
             z-index: 1000;
             transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateX(400px);
+        }
+
+        .api-status.show {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         .api-status.online {
@@ -659,23 +666,15 @@
 
         /* Footer */
         .footer {
-            background: var(--text-primary);
-            color: white;
-            text-align: center;
-            padding: 2rem 0;
-            margin-top: 4rem;
-        }
-
-        .footer p {
-            opacity: 0.8;
+            display: none;
         }
     </style>
 </head>
 <body>
     <!-- API Status Indicator -->
-    <div id="apiStatus" class="api-status offline">
+    <div id="apiStatus" class="api-status">
         <i class="fas fa-circle"></i>
-        API Bağlantısı Kontrol Ediliyor...
+        API Kontrol Ediliyor...
     </div>
 
     <!-- Header -->
@@ -889,13 +888,6 @@
             </div>
         </div>
     </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 Flexta - Mağaza Transfer Optimizasyon Sistemi. Tüm hakları saklıdır.</p>
-        </div>
-    </footer>
 
     <script>
         // Global variables
@@ -1168,8 +1160,14 @@
                     const data = await response.json();
                     console.log('API Health Check başarılı:', data);
                     
-                    apiStatus.className = 'api-status online';
-                    apiStatus.innerHTML = '<i class="fas fa-circle"></i> API Bağlı';
+                    // Başarılı bağlantı - kısa süre göster sonra gizle
+                    apiStatus.className = 'api-status online show';
+                    apiStatus.innerHTML = '<i class="fas fa-check-circle"></i> API Bağlantısı Kuruldu';
+                    
+                    // 3 saniye sonra gizle
+                    setTimeout(() => {
+                        apiStatus.classList.remove('show');
+                    }, 3000);
                     
                     return true;
                 } else {
@@ -1178,8 +1176,9 @@
             } catch (error) {
                 console.error('API Health Check hatası:', error);
                 
-                apiStatus.className = 'api-status offline';
-                apiStatus.innerHTML = '<i class="fas fa-circle"></i> API Bağlantı Hatası';
+                // Hata durumu - sürekli göster
+                apiStatus.className = 'api-status offline show';
+                apiStatus.innerHTML = '<i class="fas fa-exclamation-triangle"></i> API Bağlantı Hatası';
                 
                 return false;
             }
