@@ -129,10 +129,14 @@
             color: white;
         }
 
-        .btn-danger:disabled {
-            background: #fca5a5;
-            cursor: not-allowed;
-            transform: none;
+        .btn-active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .btn-active:hover {
+            background: var(--primary-dark);
         }
 
         /* Hero Section */
@@ -951,28 +955,30 @@
                 storeInfo.textContent = 'Aktif';
             }
             
-            // Ana checkbox'ı güncelle
+            // Ana butonu güncelle
             updateMainCheckbox();
             updateExclusionSummary();
             console.log('İstisna mağazalar:', excludedStores);
         }
 
         function updateMainCheckbox() {
-            const mainCheckbox = document.getElementById('selectAllCheckbox');
+            const toggleBtn = document.getElementById('toggleAllBtn');
             const toggleText = document.getElementById('toggleAllText');
             
             if (excludedStores.length === 0) {
-                // Hiçbiri seçili değil
-                mainCheckbox.checked = false;
+                // Hiçbiri seçili değil - pasif buton
+                toggleBtn.classList.remove('btn-active');
+                toggleBtn.classList.add('btn-secondary');
                 toggleText.textContent = 'Tümünü Seç';
             } else if (excludedStores.length === availableStores.length) {
-                // Tümü seçili
-                mainCheckbox.checked = true;
+                // Tümü seçili - aktif buton
+                toggleBtn.classList.remove('btn-secondary');
+                toggleBtn.classList.add('btn-active');
                 toggleText.textContent = 'Tümünü Kaldır';
             } else {
-                // Kısmi seçim - checkbox'ı kısmen işaretli yap
-                mainCheckbox.checked = false;
-                mainCheckbox.indeterminate = true;
+                // Kısmi seçim - pasif buton ama farklı metin
+                toggleBtn.classList.remove('btn-active');
+                toggleBtn.classList.add('btn-secondary');
                 toggleText.textContent = 'Tümünü Seç';
             }
         }
@@ -988,28 +994,13 @@
         }
 
         function toggleAllStores() {
-            const checkbox = document.getElementById('selectAllCheckbox');
+            const toggleBtn = document.getElementById('toggleAllBtn');
             const toggleText = document.getElementById('toggleAllText');
             
-            if (checkbox.checked) {
-                // Tümünü seç
-                availableStores.forEach(storeName => {
-                    const storeCheckbox = document.getElementById(`store_${storeName.replace(/\s+/g, '_')}`);
-                    const storeItem = storeCheckbox.closest('.store-item');
-                    const storeInfo = storeItem.querySelector('.store-info');
-                    
-                    storeCheckbox.checked = true;
-                    if (!excludedStores.includes(storeName)) {
-                        excludedStores.push(storeName);
-                    }
-                    storeItem.classList.add('excluded');
-                    storeInfo.textContent = 'İstisna';
-                });
-                
-                // Buton görünümünü güncelle
-                toggleText.textContent = 'Tümünü Kaldır';
-                
-            } else {
+            // Mevcut durumu kontrol et
+            const isAllSelected = excludedStores.length === availableStores.length;
+            
+            if (isAllSelected) {
                 // Tümünü kaldır
                 excludedStores = [];
                 
@@ -1023,12 +1014,33 @@
                     storeInfo.textContent = 'Aktif';
                 });
                 
-                // Buton görünümünü güncelle
+                // Buton görünümünü güncelle - pasif duruma
+                toggleBtn.classList.remove('btn-active');
+                toggleBtn.classList.add('btn-secondary');
                 toggleText.textContent = 'Tümünü Seç';
+                
+            } else {
+                // Tümünü seç
+                excludedStores = [...availableStores]; // Tüm mağazaları kopyala
+                
+                availableStores.forEach(storeName => {
+                    const storeCheckbox = document.getElementById(`store_${storeName.replace(/\s+/g, '_')}`);
+                    const storeItem = storeCheckbox.closest('.store-item');
+                    const storeInfo = storeItem.querySelector('.store-info');
+                    
+                    storeCheckbox.checked = true;
+                    storeItem.classList.add('excluded');
+                    storeInfo.textContent = 'İstisna';
+                });
+                
+                // Buton görünümünü güncelle - aktif duruma
+                toggleBtn.classList.remove('btn-secondary');
+                toggleBtn.classList.add('btn-active');
+                toggleText.textContent = 'Tümünü Kaldır';
             }
             
             updateExclusionSummary();
-            console.log('Toggle all stores:', checkbox.checked ? 'Selected All' : 'Cleared All', excludedStores);
+            console.log('Toggle all stores:', isAllSelected ? 'Cleared All' : 'Selected All', excludedStores);
         }
 
         function updateExclusionSummary() {
