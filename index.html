@@ -248,6 +248,13 @@
             text-align: center;
             transition: all 0.3s ease;
             cursor: pointer;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 10;
         }
 
         .upload-area:hover {
@@ -262,17 +269,21 @@
 
         .upload-icon {
             font-size: 4rem;
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            color: var(--primary-color);
+            margin-bottom: 0;
+            display: block;
+            width: 100%;
+            height: auto;
+            position: relative;
+            z-index: 20;
         }
 
         .upload-icon i {
-            display: block !important;
+            display: inline-block !important;
             visibility: visible !important;
             opacity: 1 !important;
+            font-weight: 900 !important;
+            line-height: 1 !important;
         }
 
         .upload-text h3 {
@@ -1636,4 +1647,4 @@
         });
     </script>
 </body>
-    </html>
+</html>
