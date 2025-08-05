@@ -784,7 +784,6 @@
                                 <div style="display: flex; align-items: center; gap: 0.5rem;">
                                     <input type="checkbox" id="selectAllCheckbox" onchange="toggleAllStores()" style="cursor: pointer;">
                                     <button class="btn btn-secondary" onclick="toggleAllStores()" id="toggleAllBtn" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
-                                        <i class="fas fa-check-square"></i>
                                         <span id="toggleAllText">Tümünü Seç</span>
                                     </button>
                                 </div>
@@ -964,24 +963,20 @@
         function updateMainCheckbox() {
             const mainCheckbox = document.getElementById('selectAllCheckbox');
             const toggleText = document.getElementById('toggleAllText');
-            const toggleIcon = document.getElementById('toggleAllBtn').querySelector('i');
             
             if (excludedStores.length === 0) {
                 // Hiçbiri seçili değil
                 mainCheckbox.checked = false;
                 toggleText.textContent = 'Tümünü Seç';
-                toggleIcon.className = 'fas fa-check-square';
             } else if (excludedStores.length === availableStores.length) {
                 // Tümü seçili
                 mainCheckbox.checked = true;
                 toggleText.textContent = 'Tümünü Kaldır';
-                toggleIcon.className = 'fas fa-times';
             } else {
                 // Kısmi seçim - checkbox'ı kısmen işaretli yap
                 mainCheckbox.checked = false;
                 mainCheckbox.indeterminate = true;
                 toggleText.textContent = 'Tümünü Seç';
-                toggleIcon.className = 'fas fa-check-square';
             }
         }
 
@@ -997,9 +992,7 @@
 
         function toggleAllStores() {
             const checkbox = document.getElementById('selectAllCheckbox');
-            const toggleBtn = document.getElementById('toggleAllBtn');
             const toggleText = document.getElementById('toggleAllText');
-            const toggleIcon = toggleBtn.querySelector('i');
             
             if (checkbox.checked) {
                 // Tümünü seç
@@ -1018,7 +1011,6 @@
                 
                 // Buton görünümünü güncelle
                 toggleText.textContent = 'Tümünü Kaldır';
-                toggleIcon.className = 'fas fa-times';
                 
             } else {
                 // Tümünü kaldır
@@ -1036,7 +1028,6 @@
                 
                 // Buton görünümünü güncelle
                 toggleText.textContent = 'Tümünü Seç';
-                toggleIcon.className = 'fas fa-check-square';
             }
             
             updateExclusionSummary();
