@@ -780,13 +780,10 @@
                             <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;">
                                 Transferden hariç tutulacak mağazaları seçin. Bu mağazalar ne gönderen ne de alan mağaza olarak kullanılmayacak.
                             </p>
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                    <input type="checkbox" id="selectAllCheckbox" onchange="toggleAllStores()" style="cursor: pointer;">
-                                    <button class="btn btn-secondary" onclick="toggleAllStores()" id="toggleAllBtn" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
-                                        <span id="toggleAllText">Tümünü Seç</span>
-                                    </button>
-                                </div>
+                            <div style="display: flex; justify-content: flex-start; align-items: center; margin-bottom: 1rem;">
+                                <button class="btn btn-secondary" onclick="toggleAllStores()" id="toggleAllBtn" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
+                                    <span id="toggleAllText">Tümünü Seç</span>
+                                </button>
                             </div>
                             <div class="store-list" id="storeList">
                                 <!-- Store checkboxes will be populated here -->
