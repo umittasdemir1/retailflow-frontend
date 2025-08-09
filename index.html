@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flexta - Mağaza Transfer Optimizasyon Sistemi</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAKxSURBVFhH7ZdLSFRRGMfPzDwqfGQmamZWZkGgRRa0KKIgKoqCFi2CoF20iFq0aBG0aNEiaBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0IAA==" />
     <style>
         * {
@@ -56,7 +57,7 @@
             justify-content: flex-start;
             align-items: center;
             padding: 1rem 0;
-            height: 80px;
+            height: 70px;
         }
 
         .logo {
@@ -682,7 +683,7 @@
         <div class="container">
             <nav class="navbar">
                 <div class="logo">
-                    <img src="https://raw.githubusercontent.com/umittasdemir1/flexta-assets/main/flexta-logo.png" alt="Flexta" style="height: 120px; width: auto;">
+                    <img src="https://raw.githubusercontent.com/umittasdemir1/flexta-assets/refs/heads/main/Flexta_New_Size_Logo.svg" alt="Flexta" style="height: 60px; width: auto;">
                 </div>
             </nav>
         </div>
@@ -726,12 +727,10 @@
                     
                     <div class="upload-area" id="uploadArea">
                         <div class="upload-icon">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                        </div>
+                            <i class="fas fa-file-excel" style="color: #22c55e;"></i>                        </div>
                         <div class="upload-text">
-                            <h3>Excel dosyanızı yükleyin</h3>
-                            <p>Sürükle-bırak yapın veya tıklayarak seçin</p>
-                            <small>Desteklenen: .xlsx, .xls, .csv (Max: 50MB)</small>
+                            <h3>Dosya Seç</h3>
+                            <p>veya sürükle-bırak yapınız</p>
                         </div>
                         <input type="file" id="fileInput" class="file-input" accept=".xlsx,.xls,.csv">
                     </div>
@@ -749,11 +748,13 @@
                                 <i class="fas fa-file-check"></i>
                                 Yüklenen Dosya
                             </div>
-                            <div class="stat-value" id="fileName" style="margin-bottom: 1rem;"></div>
-                            <button class="btn btn-secondary" onclick="removeFile()" id="removeFileBtn" style="padding: 0.5rem 1rem; font-size: 0.85rem; width: 100%;">
-                                <i class="fas fa-times"></i>
-                                Kaldır
-                            </button>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div class="stat-value" id="fileName"></div>
+                                <button class="btn btn-secondary" onclick="removeFile()" id="removeFileBtn" style="padding: 0.5rem 1rem; font-size: 0.85rem; margin-left: 1rem;">
+                                    <i class="fas fa-times"></i>
+                                    Kaldır
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -1630,4 +1631,4 @@
         });
     </script>
 </body>
-            </html>
+</html>
