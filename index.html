@@ -1090,6 +1090,16 @@
                 selectedTargetStore = null;
             }
             
+            // Show/hide strategy section based on transfer type
+            if (type === 'size_completion') {
+                // Beden tamamlama için strateji gizle
+                strategySection.style.display = 'none';
+                console.log('Beden tamamlama seçildi - strateji bölümü gizlendi');
+            } else {
+                // Diğer tipler için strateji göster
+                strategySection.style.display = 'block';
+            }
+            
             // Update analyze button text and loading text
             updateAnalyzeButtonText();
             
@@ -1570,11 +1580,18 @@
 
             try {
                 const requestBody = {
-                    strategy: selectedStrategy,
                     excluded_stores: excludedStores,
                     transfer_type: selectedTransferType,
                     target_store: selectedTargetStore
                 };
+
+                // Sadece beden tamamlama DEĞİLSE strateji ekle
+                if (selectedTransferType !== 'size_completion') {
+                    requestBody.strategy = selectedStrategy;
+                    console.log('Strateji dahil edildi:', selectedStrategy);
+                } else {
+                    console.log('Beden tamamlama - strateji dahil edilmedi');
+                }
 
                 const response = await fetch(`${API_BASE}/analyze`, {
                     method: 'POST',
@@ -1599,17 +1616,17 @@
                         resultsSection.style.display = 'block';
                         downloadBtn.disabled = false;
                         
-                        let successMessage = `${selectedStrategy.charAt(0).toUpperCase() + selectedStrategy.slice(1)} strateji ile `;
+                        let successMessage = '';
                         
                         switch(selectedTransferType) {
                             case 'targeted':
-                                successMessage += `${selectedTargetStore} için spesifik analiz tamamlandı!`;
+                                successMessage = `${selectedStrategy.charAt(0).toUpperCase() + selectedStrategy.slice(1)} strateji ile ${selectedTargetStore} için spesifik analiz tamamlandı!`;
                                 break;
                             case 'size_completion':
-                                successMessage += `${selectedTargetStore} için beden tamamlama analizi tamamlandı!`;
+                                successMessage = `${selectedTargetStore} için beden tamamlama analizi tamamlandı!`;
                                 break;
                             default:
-                                successMessage += 'global analiz tamamlandı!';
+                                successMessage = `${selectedStrategy.charAt(0).toUpperCase() + selectedStrategy.slice(1)} strateji ile global analiz tamamlandı!`;
                         }
                         
                         if (excludedStores.length > 0) {
