@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flexta - Mağaza Transfer Optimizasyon Sistemi</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAKxSURBVFhH7ZdLSFRRGMfPzDwqfGQmamZWZkGgRRa0KKIgKoqCFi2CoF20iFq0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0aBG0IAA=" />
+    <link rel="icon" type="image/png" href="https://i.imgur.com/q54vNPc.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://i.imgur.com/q54vNPc.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://i.imgur.com/q54vNPc.png">
     <style>
         * {
             margin: 0;
@@ -259,7 +261,6 @@
             text-align: center;
             position: relative;
             overflow: hidden;
-            
         }
 
         /* Hero background for different themes */
@@ -452,25 +453,92 @@
             display: none;
         }
 
-        /* Progress Bar */
+        /* Enhanced Progress Container */
         .progress-container {
-            margin: 1rem 0;
+            margin: 2rem 0;
             display: none;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
+            text-align: center;
+            padding: 2rem;
             background: var(--bg-muted);
-            border-radius: 4px;
-            overflow: hidden;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
         }
 
-        .progress-fill {
+        /* Animated Loader */
+        .file-loader {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1.5rem;
+            position: relative;
+        }
+
+        .loader-circle {
+            width: 100%;
             height: 100%;
+            border: 4px solid var(--bg-muted);
+            border-top: 4px solid var(--color-primary);
+            border-right: 4px solid var(--color-accent);
+            border-radius: 50%;
+            animation: spin 1.2s linear infinite;
+        }
+
+        .loader-dots {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 4px;
+        }
+
+        .loader-dot {
+            width: 6px;
+            height: 6px;
             background: var(--color-primary);
-            width: 0%;
-            transition: width 0.3s ease;
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out;
+        }
+
+        .loader-dot:nth-child(1) { animation-delay: -0.32s; }
+        .loader-dot:nth-child(2) { animation-delay: -0.16s; }
+        .loader-dot:nth-child(3) { animation-delay: 0s; }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes bounce {
+            0%, 80%, 100% { 
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+            40% { 
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        /* Progress Messages */
+        .progress-message {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            min-height: 1.5rem;
+            transition: all 0.5s ease;
+        }
+
+        .progress-submessage {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            min-height: 1.2rem;
+            transition: all 0.5s ease;
+        }
+
+        /* Progress Bar (Hidden but kept for fallback) */
+        .progress-bar {
+            display: none;
         }
 
         /* Transfer Type Selection */
@@ -767,11 +835,6 @@
             margin: 0 auto 1rem;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         /* API Status Indicator - Next to Flexta Logo End */
         .api-status-dot {
             position: fixed;
@@ -816,16 +879,6 @@
             0%, 50% { opacity: 1; }
             51%, 100% { opacity: 0.3; }
         }
-
-        /* Mobile adjustment */
-        @media (max-width: 768px) {
-    .api-status-dot {
-        top: 27.5px;      /* ← Bu satırı ekle (yukarı için küçült) */
-        right: 10px;
-        width: 6px;
-        height: 6px;
-        }
-    }
 
         /* Store List */
         .store-list {
@@ -936,25 +989,11 @@
                 transform: translateX(30px);
             }
 
-            .theme-toggle::before,
-            .theme-toggle::after {
-                font-size: 10px;
-            }
-
-            .theme-toggle::before {
-                left: 6px;
-            }
-
-            .theme-toggle::after {
-                right: 6px;
-            }
-        }
-
-            .api-status {
-                top: 60px;
+            .api-status-dot {
+                top: 27.5px;
                 right: 10px;
-                font-size: 0.75rem;
-                padding: 0.5rem 1rem;
+                width: 6px;
+                height: 6px;
             }
 
             .notification {
@@ -1089,10 +1128,19 @@
                     </div>
 
                     <div class="progress-container" id="progressContainer">
+                        <div class="file-loader">
+                            <div class="loader-circle"></div>
+                            <div class="loader-dots">
+                                <div class="loader-dot"></div>
+                                <div class="loader-dot"></div>
+                                <div class="loader-dot"></div>
+                            </div>
+                        </div>
+                        <div class="progress-message" id="progressMessage">Dosya yükleniyor...</div>
+                        <div class="progress-submessage" id="progressSubMessage">Lütfen bekleyiniz</div>
                         <div class="progress-bar">
                             <div class="progress-fill" id="progressFill"></div>
                         </div>
-                        <p id="progressText">Yükleniyor...</p>
                     </div>
 
                     <div id="fileInfo" style="display: none; margin-top: 1rem;">
@@ -1327,8 +1375,8 @@
         const uploadArea = document.getElementById('uploadArea');
         const fileInput = document.getElementById('fileInput');
         const progressContainer = document.getElementById('progressContainer');
-        const progressFill = document.getElementById('progressFill');
-        const progressText = document.getElementById('progressText');
+        const progressMessage = document.getElementById('progressMessage');
+        const progressSubMessage = document.getElementById('progressSubMessage');
         const fileInfo = document.getElementById('fileInfo');
         const transferTypeSection = document.getElementById('transferTypeSection');
         const strategySection = document.getElementById('strategySection');
@@ -1773,24 +1821,44 @@
             const formData = new FormData();
             formData.append('file', file);
 
+            // Progress messages array
+            const progressMessages = [
+                { main: "Dosya yükleniyor...", sub: "Lütfen bekleyiniz" },
+                { main: "Dosya işleniyor...", sub: "Excel verileri okunuyor" },
+                { main: "Veriler analiz ediliyor...", sub: "Mağaza bilgileri kontrol ediliyor" },
+                { main: "STR hesaplamaları yapılıyor...", sub: "Performans metrikleri hesaplanıyor" },
+                { main: "Sistem hazırlanıyor...", sub: "Transfer analizine hazırlanıyor" },
+                { main: "Tamamlanıyor...", sub: "Son kontroller yapılıyor" }
+            ];
+
+            let currentMessageIndex = 0;
+
+            // Function to update messages
+            function updateProgressMessage() {
+                if (currentMessageIndex < progressMessages.length) {
+                    const message = progressMessages[currentMessageIndex];
+                    progressMessage.textContent = message.main;
+                    progressSubMessage.textContent = message.sub;
+                    currentMessageIndex++;
+                }
+            }
+
             try {
                 console.log('Dosya yükleme başlatılıyor...');
                 
-                // Simulate progress
-                let progress = 0;
-                const progressInterval = setInterval(() => {
-                    progress += Math.random() * 15;
-                    if (progress > 90) progress = 90;
-                    progressFill.style.width = progress + '%';
-                    progressText.textContent = `Yükleniyor... ${Math.round(progress)}%`;
-                }, 200);
+                // Show progress
+                progressContainer.style.display = 'block';
+                updateProgressMessage();
+
+                // Update messages every 2 seconds
+                const messageInterval = setInterval(updateProgressMessage, 2000);
 
                 const response = await fetch(`${API_BASE}/upload`, {
                     method: 'POST',
                     body: formData
                 });
 
-                clearInterval(progressInterval);
+                clearInterval(messageInterval);
                 
                 console.log('Upload response status:', response.status);
 
@@ -1798,8 +1866,9 @@
                     const result = await response.json();
                     console.log('Upload başarılı:', result);
                     
-                    progressFill.style.width = '100%';
-                    progressText.textContent = 'Yükleme tamamlandı!';
+                    // Final success message
+                    progressMessage.textContent = "✅ Başarılı!";
+                    progressSubMessage.textContent = "Dosya başarıyla yüklendi";
                     
                     // Show file info and sections
                     document.getElementById('fileName').textContent = file.name;
@@ -1830,8 +1899,16 @@
                 }
             } catch (error) {
                 console.error('Upload error:', error);
+                
+                // Error message
+                progressMessage.textContent = "❌ Hata!";
+                progressSubMessage.textContent = `Yükleme başarısız: ${error.message}`;
+                
                 showNotification(`Dosya yükleme başarısız: ${error.message}`, 'error');
-                progressContainer.style.display = 'none';
+                
+                setTimeout(() => {
+                    progressContainer.style.display = 'none';
+                }, 3000);
             }
         }
 
@@ -2224,4 +2301,3 @@
     </script>
 </body>
 </html>
-
