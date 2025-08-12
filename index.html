@@ -453,6 +453,32 @@
             display: none;
         }
 
+        /* File Remove Button - Red Circle X */
+        .file-remove-btn {
+            width: 24px;
+            height: 24px;
+            background: #EF4444;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            margin-left: 2rem;
+            padding: 0;
+            min-width: auto;
+        }
+
+        .file-remove-btn:hover {
+            background: #DC2626;
+        }
+
+        .file-remove-btn i {
+            font-weight: 900;
+        }
+
         /* Enhanced Progress Container */
         .progress-container {
             margin: 2rem 0;
@@ -1151,9 +1177,8 @@
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                 <div class="stat-value" id="fileName"></div>
-                                <button class="btn btn-secondary" onclick="removeFile()" id="removeFileBtn" style="padding: 0.5rem 1rem; font-size: 0.85rem; margin-left: 1rem;">
+                                <button class="file-remove-btn" onclick="removeFile()" id="removeFileBtn">
                                     <i class="fas fa-times"></i>
-                                    Kaldır
                                 </button>
                             </div>
                         </div>
@@ -1696,6 +1721,9 @@
             document.getElementById('resultsSection').style.display = 'none';
             progressContainer.style.display = 'none';
             
+            // Show upload area again
+            uploadArea.style.display = 'block';
+            
             // Reset file input
             fileInput.value = '';
             
@@ -1812,7 +1840,8 @@
                 return;
             }
 
-            // Show progress
+            // Hide upload area, show progress
+            uploadArea.style.display = 'none';
             progressContainer.style.display = 'block';
             uploadFile(file);
         }
@@ -1891,6 +1920,7 @@
                     
                     setTimeout(() => {
                         progressContainer.style.display = 'none';
+                        uploadArea.style.display = 'none'; // Keep upload area hidden after success
                     }, 2000);
                 } else {
                     const errorData = await response.json();
@@ -1908,6 +1938,7 @@
                 
                 setTimeout(() => {
                     progressContainer.style.display = 'none';
+                    uploadArea.style.display = 'block'; // Show upload area again on error
                 }, 3000);
             }
         }
