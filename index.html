@@ -772,36 +772,58 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* API Status */
-        .api-status {
+        /* API Status Indicator - Next to Flexta Logo End */
+        .api-status-dot {
             position: fixed;
-            top: 70px;
-            right: 20px;
-            padding: 0.75rem 1.25rem;
-            border-radius: 25px;
-            font-size: 0.875rem;
-            font-weight: 500;
+            top: 33px;
+            right: 15px;
             z-index: 1000;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
             transition: all 0.3s ease;
             opacity: 0;
-            transform: translateX(400px);
+            transform: scale(0);
         }
 
-        .api-status.show {
+        .api-status-dot.show {
             opacity: 1;
-            transform: translateX(0);
+            transform: scale(1);
         }
 
-        .api-status.online {
-            background: rgba(34, 197, 94, 0.1);
-            color: var(--color-accent);
-            border: 1px solid rgba(34, 197, 94, 0.3);
+        .api-status-dot.connecting {
+            background: #F59E0B;
+            animation: pulse 1s infinite;
         }
 
-        .api-status.offline {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--color-danger);
-            border: 1px solid rgba(239, 68, 68, 0.3);
+        .api-status-dot.online {
+            background: #22C55E;
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+        }
+
+        .api-status-dot.offline {
+            background: #EF4444;
+            animation: blink 0.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+
+        /* Mobile adjustment */
+        @media (max-width: 768px) {
+            .api-status-dot {
+                right: 15px;
+                width: 6px;
+                height: 6px;
+            }
         }
 
         /* Store List */
@@ -997,11 +1019,8 @@
         </div>
     </div>
 
-    <!-- API Status Indicator -->
-    <div id="apiStatus" class="api-status">
-        <i class="fas fa-circle"></i>
-        API Kontrol Ediliyor...
-    </div>
+    <!-- API Status Dot -->
+    <div id="apiStatusDot" class="api-status-dot connecting show"></div>
 
     <!-- Header -->
     <header class="header">
@@ -1314,7 +1333,7 @@
         const exclusionCount = document.getElementById('exclusionCount');
         const analyzeBtn = document.getElementById('analyzeBtn');
         const downloadBtn = document.getElementById('downloadBtn');
-        const apiStatus = document.getElementById('apiStatus');
+        const apiStatusDot = document.getElementById('apiStatusDot');
         const loadingText = document.getElementById('loadingText');
         const resultsTitle = document.getElementById('resultsTitle');
 
@@ -1643,6 +1662,9 @@
 
         // API Health Check
         async function checkAPIHealth() {
+            const apiStatusDot = document.getElementById('apiStatusDot');
+            apiStatusDot.className = 'api-status-dot connecting show';
+            
             try {
                 console.log('API health check başlatılıyor...');
                 
@@ -1660,9 +1682,8 @@
                     const data = await response.json();
                     console.log('API Health Check başarılı:', data);
                     
-                    // Başarılı bağlantı - kısa süre göster sonra gizle
-                    apiStatus.className = 'api-status online show';
-                    apiStatus.innerHTML = '<i class="fas fa-check-circle"></i> API Bağlantısı Kuruldu';
+                    // Başarılı bağlantı - yeşil dot
+                    apiStatusDot.className = 'api-status-dot online show';
                     
                     // Beden haritası kontrol et
                     if (data.beden_haritasi_loaded && data.beden_haritasi_count > 0) {
@@ -1671,11 +1692,6 @@
                         console.warn('Beden haritası yüklenmemiş');
                     }
                     
-                    // 3 saniye sonra gizle
-                    setTimeout(() => {
-                        apiStatus.classList.remove('show');
-                    }, 3000);
-                    
                     return true;
                 } else {
                     throw new Error(`HTTP ${response.status}`);
@@ -1683,9 +1699,8 @@
             } catch (error) {
                 console.error('API Health Check hatası:', error);
                 
-                // Hata durumu - sürekli göster
-                apiStatus.className = 'api-status offline show';
-                apiStatus.innerHTML = '<i class="fas fa-exclamation-triangle"></i> API Bağlantı Hatası';
+                // Hata durumu - kırmızı yanıp sönen dot
+                apiStatusDot.className = 'api-status-dot offline show';
                 
                 return false;
             }
@@ -2190,7 +2205,7 @@
             // API bağlantısını kontrol et
             const apiHealthy = await checkAPIHealth();
             if (!apiHealthy) {
-                showNotification('Backend bağlantısı kurulamadı! Lütfen daha sonra tekrar deneyin.', 'error');
+                console.log('Backend bağlantısı kurulamadı');
             }
             
             // API status'u 30 saniyede bir kontrol et
