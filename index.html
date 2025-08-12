@@ -824,8 +824,8 @@
         right: 10px;
         width: 6px;
         height: 6px;
+        }
     }
-}
 
         /* Store List */
         .store-list {
@@ -1006,9 +1006,15 @@
             display: none;
         }
 
-        /* Smooth transitions for theme switching */
-        * {
+        /* Smooth transitions for theme switching - Optimized */
+        body, .header, .card, .hero, .theme-toggle, .btn {
             transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* Prevent layout shifts during theme transition */
+        * {
+            backface-visibility: hidden;
+            transform: translateZ(0);
         }
     </style>
 </head>
@@ -2218,9 +2224,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
