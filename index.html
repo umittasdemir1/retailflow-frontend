@@ -326,8 +326,8 @@
             justify-content: flex-start;
             align-items: center;
             text-align: center;
-            padding: 2.5rem;
-            min-height: 320px;
+            padding:  2rem;
+            min-height:  380px;
         }
 
         .stat-card::before {
@@ -373,7 +373,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-        }
+        
+    transform: translateY(-4px);
+}
 
         .card-icon img {
             width: 60px;
@@ -432,7 +434,9 @@
             .card-icon {
                 height: 60px;
                 margin-bottom: 1.25rem;
-            }
+            
+    transform: translateY(-4px);
+}
             
             .card-icon img {
                 width: 50px;
@@ -481,6 +485,7 @@
 
         /* Tablet - 2 columns with centered 3rd card */
         @media (min-width: 769px) and (max-width: 1024px) {
+            .stat-card { min-height: 380px; }
             .hero-stats {
                 grid-template-columns: repeat(2, 1fr);
                 max-width: 800px;
@@ -496,7 +501,9 @@
             .card-icon {
                 height: 65px;
                 margin-bottom: 1.25rem;
-            }
+            
+    transform: translateY(-4px);
+}
             
             .card-icon img {
                 width: 55px;
@@ -1341,6 +1348,95 @@ font-size: 1.25rem;
     background-color: #8E24AA; /* Purple */
 }
 
+
+/* --- Tweaks: slightly reduced radii across cards --- */
+.stat-card,
+.card,
+.upload-area,
+.progress-container,
+.transfer-type-section,
+.strategy-section,
+.table-container,
+.stat-item,
+.transfer-type-option,
+.strategy-option,
+.notification {
+    border-radius: 10px !important;
+}
+
+
+/* --- Hero stat cards: make larger, push icons & text upward --- */
+.stat-card {
+    justify-content: flex-start !important;    /* content starts from top */
+    padding-top: 1rem !important;              /* reduce top padding so icon gets closer to top edge */
+    min-height: 420px !important;              /* larger card for long copy on desktop/tablet */
+}
+
+/* Lift icon and tighten spacing below it */
+.card-icon {
+    transform: translateY(-10px) !important;
+    margin-bottom: 1rem !important;
+}
+
+/* Pull titles upward and keep compact vertical rhythm */
+.stat-card .card-title {
+    margin-top: 0 !important;
+    margin-bottom: 0.5rem !important;
+}
+
+/* Slightly tighter space before description */
+.stat-card .card-description {
+    margin-top: 0.5rem !important;
+}
+
+/* Tablet+: give even more breathing room if needed */
+@media (min-width: 1025px) {
+    .stat-card { min-height: 440px !important; }
+}
+
+/* Mobile: still taller than before but not excessive */
+@media (max-width: 768px) {
+    .stat-card { min-height: 400px !important; }
+}
+
+
+/* --- Adjusted stat cards for better balance --- */
+.stat-card {
+    justify-content: flex-start !important;
+    padding-top: 1rem !important;
+    min-height: 400px !important; /* reduced from 420-440 */
+}
+
+/* Icon positioning */
+.card-icon {
+    transform: translateY(-8px) !important; /* slightly less lift */
+    margin-bottom: 0.75rem !important;
+}
+
+/* Title spacing */
+.stat-card .card-title {
+    margin-top: 0 !important;
+    margin-bottom: 0.5rem !important;
+}
+
+/* Description alignment - force same top offset across cards */
+.stat-card .card-description {
+    margin-top: 0.5rem !important;
+    min-height: 48px; /* reserve equal space before description text */
+    display: flex;
+    align-items: flex-start;
+}
+
+/* Tablet+ adjustments */
+@media (min-width: 1025px) {
+    .stat-card { min-height: 400px !important; }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .stat-card { min-height: 380px !important; }
+}
+
 </style>
 </head>
 <body>
@@ -1379,7 +1475,7 @@ font-size: 1.25rem;
                         <img src="https://raw.githubusercontent.com/umittasdemir1/flexta-assets/refs/heads/main/Card1.svg" alt="Sales Icon">
                     </div>
                     <div class="card-title">
-                        <span class="title-main">Satış Performansını Arttırın</span>
+                        <span class="title-main">Satışlarınızı Arttırın</span>
 <span class="title-highlight">10%'a Varan Oranda</span>
                     </div>
                     <div class="card-description">
@@ -2617,5 +2713,4 @@ font-size: 1.25rem;
     </script>
 </body>
 </html> 
-
 
