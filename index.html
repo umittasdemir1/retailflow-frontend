@@ -294,22 +294,38 @@
             margin: 0 auto 2rem;
         }
 
+        /* Updated Hero Stats - Square Cards */
         .hero-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
             margin-top: 3rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 2rem;
         }
 
         .stat-card {
             background: rgba(255, 255, 255, 0.1);
-            padding: 1.5rem;
             border-radius: 12px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            
+            /* 1:1 Aspect Ratio - Makes it square */
+            aspect-ratio: 1 / 1;
+            
+            /* Flexbox to center content */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            text-align: center;
+            padding: 2.5rem;
+            min-height: 320px;
         }
 
         .stat-card::before {
@@ -338,9 +354,10 @@
         }
 
         .stat-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px) scale(1.02);
             background: rgba(255, 255, 255, 0.15);
             border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
 
         [data-theme="dark"] .stat-card:hover {
@@ -348,10 +365,154 @@
             border-color: rgba(79, 70, 229, 0.5);
         }
 
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
+        .card-icon {
+            height: 70px;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-icon img {
+            width: 60px;
+            height: 60px;
+            transition: all 0.3s ease;
+        }
+
+        .card-title {
+            margin-bottom: 0;
+            line-height: 1.2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .title-main {
+            font-size: 1.8rem;
+            font-weight: 400;
+            display: block !important;
+            margin-bottom: 0;
+        }
+
+        .title-highlight {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: block !important;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-description {
+            font-size: 1.1rem;
+            line-height: 1.4;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        /* Mobile - Stack vertically */
+        @media (max-width: 768px) {
+            .hero-stats {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                margin-top: 2rem;
+                max-width: 350px;
+                padding: 0 1rem;
+            }
+            
+            .stat-card {
+                padding: 2rem 1.5rem;
+                border-radius: 12px;
+                min-height: 350px;
+            }
+            
+            .card-icon {
+                height: 60px;
+                margin-bottom: 1.25rem;
+            }
+            
+            .card-icon img {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .title-main {
+                font-size: 1.6rem;
+                margin-bottom: 0;
+                display: block !important;
+            }
+            
+            .title-highlight {
+                font-size: 1.6rem;
+                display: block !important;
+                margin-bottom: 1.5rem;
+            }
+            
+            .card-description {
+                font-size: 1rem;
+                line-height: 1.4;
+            }
+
+            .theme-toggle {
+                width: 60px;
+                height: 30px;
+            }
+
+            .theme-switch-circle {
+                width: 24px;
+                height: 24px;
+            }
+
+            .theme-switch-circle i {
+                font-size: 12px;
+            }
+
+            .theme-toggle.dark-mode .theme-switch-circle {
+                transform: translateX(30px);
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Tablet - 2 columns with centered 3rd card */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .hero-stats {
+                grid-template-columns: repeat(2, 1fr);
+                max-width: 800px;
+                gap: 2.5rem;
+            }
+            
+            .stat-card:nth-child(3) {
+                grid-column: 1 / -1;
+                max-width: 350px;
+                margin: 0 auto;
+            }
+            
+            .card-icon {
+                height: 65px;
+                margin-bottom: 1.25rem;
+            }
+            
+            .card-icon img {
+                width: 55px;
+                height: 55px;
+            }
+            
+            .title-main {
+                font-size: 1.9rem;
+                margin-bottom: 0;
+                display: block !important;
+            }
+            
+            .title-highlight {
+                font-size: 1.9rem;
+                display: block !important;
+                margin-bottom: 1.5rem;
+            }
+            
+            .card-description {
+                font-size: 1.15rem;
+            }
         }
 
         /* Main Dashboard */
@@ -400,16 +561,15 @@
             margin-bottom: 1.5rem;
         }
 
-        .card-title {
-            font-size: 1.25rem;
+        .card-header .card-title {
+font-size: 1.25rem;
             font-weight: 600;
             color: var(--text-primary);
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
-
-        /* File Upload */
+/* File Upload */
         .upload-area {
             border: 2px dashed var(--border-color);
             border-radius: 12px;
@@ -991,24 +1151,6 @@
         }
 
         @media (max-width: 768px) {
-            .theme-toggle {
-                width: 60px;
-                height: 30px;
-            }
-
-            .theme-switch-circle {
-                width: 24px;
-                height: 24px;
-            }
-
-            .theme-switch-circle i {
-                font-size: 12px;
-            }
-
-            .theme-toggle.dark-mode .theme-switch-circle {
-                transform: translateX(30px);
-            }
-
             .api-status-dot {
                 width: 6px;
                 height: 6px;
@@ -1028,14 +1170,6 @@
             .card {
                 min-height: auto;
                 padding: 1.5rem;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero-stats {
-                grid-template-columns: repeat(2, 1fr);
             }
 
             .results-stats {
@@ -1170,7 +1304,12 @@
             backface-visibility: hidden;
             transform: translateZ(0);
         }
-    </style>
+    
+/* Scoped stat-card text spacing */
+.stat-card .card-title { margin-bottom: 0.5rem; }
+.stat-card .card-description { margin-top: 0.75rem; }
+
+</style>
 </head>
 <body>
     <!-- Header -->
@@ -1204,16 +1343,40 @@
             
             <div class="hero-stats">
                 <div class="stat-card">
-                    <div class="stat-number">%35</div>
-                    <div>Satış Artışı</div>
+                    <div class="card-icon">
+                        <img src="https://raw.githubusercontent.com/umittasdemir1/flexta-assets/refs/heads/main/Card1.svg" alt="Sales Icon">
+                    </div>
+                    <div class="card-title">
+                        <span class="title-main">Boost your sales</span>
+<span class="title-highlight">by up to 12%</span>
+                    </div>
+                    <div class="card-description">
+                        Predict demand with AI-powered analytics and ensure every product reaches the right store at the right time, maximizing turnover and customer satisfaction.
+                    </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">%28</div>
-                    <div>Envanter Azalışı</div>
+                    <div class="card-icon">
+                        <img src="https://raw.githubusercontent.com/umittasdemir1/flexta-assets/refs/heads/main/Card2.svg" alt="Inventory Icon">
+                    </div>
+                    <div class="card-title">
+                        <span class="title-main">Cut excess inventory</span>
+<span class="title-highlight">by up to 35%</span>
+                    </div>
+                    <div class="card-description">
+                        Balance supply and demand across locations using real-time sales data and intelligent distribution, minimizing storage costs and waste.
+                    </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">24/7</div>
-                    <div>Otomatik Analiz</div>
+                    <div class="card-icon">
+                        <img src="https://raw.githubusercontent.com/umittasdemir1/flexta-assets/refs/heads/main/Card3.svg" alt="Automation Icon">
+                    </div>
+                    <div class="card-title">
+                        <span class="title-main">Streamline your operations</span>
+<span class="title-highlight">with full automation</span>
+                    </div>
+                    <div class="card-description">
+                        Replace manual spreadsheets with smart, adaptive planning tools that respond instantly to market changes and keep your business ahead.
+                    </div>
                 </div>
             </div>
         </div>
@@ -2421,5 +2584,4 @@
         });
     </script>
 </body>
-</html>
-
+</html> 
