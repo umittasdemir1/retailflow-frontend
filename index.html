@@ -182,7 +182,9 @@
             display: flex;
             gap: 1rem;
             align-items: center;
-        }
+        
+    position: relative;
+}
 
         .btn {
             padding: 0.75rem 1.5rem;
@@ -414,9 +416,12 @@
                 grid-template-columns: 1fr;
                 gap: 2rem;
                 margin-top: 2rem;
-                max-width: 350px;
+                max-width: 100%;
                 padding: 0 1rem;
-            }
+            
+    justify-items: center;
+    margin-left: auto;
+    margin-right: auto;}
             
             .stat-card {
                 padding: 2rem 1.5rem;
@@ -1019,16 +1024,16 @@ font-size: 1.25rem;
 
         /* API Status Indicator - Header içinde, nav-actions'ın yanında */
         .api-status-dot {
-            position:fixed;
-            top: 13px;
-            right:75px;
+            position: absolute;
+            top: 50%;
+            right: calc(70px + 12px); /* theme toggle width + gap */
             z-index: 1000;
             width: 8px;
             height: 8px;
             border-radius: 50%;
             transition: all 0.3s ease;
             opacity: 0;
-            transform: scale(0);
+            transform: translateY(-50%);
         }
 
         .api-status-dot.show {
@@ -1152,9 +1157,17 @@ font-size: 1.25rem;
 
         @media (max-width: 768px) {
             .api-status-dot {
-                width: 6px;
-                height: 6px;
-            }
+            position: absolute;
+            top: 50%;
+            right: calc(70px + 12px); /* theme toggle width + gap */
+            z-index: 1000;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(-50%);
+        }
 
             .notification {
                 top: 60px;
@@ -1183,7 +1196,9 @@ font-size: 1.25rem;
             .nav-actions {
                 flex-direction: column;
                 gap: 0.5rem;
-            }
+            
+    position: relative;
+}
 
             /* Mobile button optimization */
             .btn {
@@ -1300,14 +1315,31 @@ font-size: 1.25rem;
         }
 
         /* Prevent layout shifts during theme transition */
-        * {
-            backface-visibility: hidden;
-            transform: translateZ(0);
-        }
+        * { backface-visibility: hidden; }
     
 /* Scoped stat-card text spacing */
 .stat-card .card-title { margin-bottom: 0.5rem; }
 .stat-card .card-description { margin-top: 0.75rem; }
+
+
+@media (max-width: 768px) {
+    .api-status-dot {
+        right: calc(60px + 10px);
+        width: 6px;
+        height: 6px;
+    }
+}
+
+
+.loader-dot:nth-child(1) {
+    background-color: #1E88E5; /* Blue */
+}
+.loader-dot:nth-child(2) {
+    background-color: #43A047; /* Green */
+}
+.loader-dot:nth-child(3) {
+    background-color: #8E24AA; /* Purple */
+}
 
 </style>
 </head>
@@ -1945,7 +1977,7 @@ font-size: 1.25rem;
                     // Reset frontend state
                     resetFileUploadState();
                     
-                    showNotification('Dosya başarıyla kaldırıldı!', 'success');
+                    
                 } else {
                     const errorData = await response.json();
                     console.error('Dosya kaldırma hatası:', errorData);
@@ -2169,7 +2201,7 @@ font-size: 1.25rem;
                     }
                     
                     uploadedData = result;
-                    showNotification('Dosya başarıyla yüklendi!', 'success');
+                    
                     
                     setTimeout(() => {
                         progressContainer.style.display = 'none';
